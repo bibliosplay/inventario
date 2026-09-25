@@ -15,13 +15,6 @@ const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<
 
 const $ = (sel) => document.querySelector(sel);
 
-/** Enlaces a los originales, derivados del mismo manifiesto que los iconos. */
-function pintarPie() {
-  $('#pie-archivos').innerHTML = HERRAMIENTAS
-    .map((h) => `<a class="pie__enlace" href="${rutaArchivo(h)}" title="Abrir el archivo original">${esc(h.archivo)}</a>`)
-    .join('');
-}
-
 /* ------------------------------------------------------------------ tema -- */
 
 const CLAVE_TEMA = 'bpm_tema';
@@ -190,7 +183,6 @@ function abrir(id) {
 async function arrancar() {
   aplicarTema(document.documentElement.dataset.tema || 'claro');
   pintarIconos();
-  pintarPie();
   montarBuscador();
 
   // iconos y ventanas posibles: uno por cada entrada del manifiesto
