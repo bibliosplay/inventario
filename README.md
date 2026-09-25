@@ -1,11 +1,11 @@
 # Inventario 2026 BPM
 
-Escritorio web con los seis archivos del inventario de la Biblioteca PCM (Sede Madrid).
+Escritorio web con los siete archivos del inventario de la Biblioteca PCM (Sede Madrid).
 
 Se abre `index.html` y aparece un escritorio: un icono por archivo, y cada icono abre
 su contenido en una ventana que se puede mover, maximizar, minimizar y cerrar.
 
-## Los seis archivos
+## Los siete archivos
 
 | Icono | Archivo | Cómo se abre |
 |---|---|---|
@@ -15,6 +15,7 @@ su contenido en una ventana que se puede mover, maximizar, minimizar y cerrar.
 | Hábitos atómicos | `habitos-atomicos-biblioteca.html` | tal cual, en un iframe |
 | 5S de la biblioteca | `5s-biblioteca.html` | tal cual, en un iframe |
 | Documento 1 | `documento1.html` | tal cual, en un iframe |
+| Recomendaciones iniciales | `recomendaciones-iniciales.html` | tal cual, en un iframe |
 
 Los cinco HTML se cargan **sin tocar**, dentro de un iframe: conservan su diseño, su
 modo oscuro y lo que guardan en el navegador. El `.xlsx` no se puede mostrar en el
@@ -42,7 +43,7 @@ Explorador.
 ```
 index.html                 el escritorio
 app/estilos/               base, escritorio, ventana, explorador
-app/js/manifiesto.js       el registro de las 6 herramientas
+app/js/manifiesto.js       el registro de las 7 herramientas
 app/js/gestor.js           ventanas: mover, maximizar, minimizar, recordar
 app/js/inicio.js           portada, buscador, arranque
 app/js/vistas/marco.js     ventana que incrusta un HTML
@@ -95,7 +96,7 @@ El ISBN se conserva: 20.648 fichas tienen un ISBN distinto del número de sistem
 
 ## Los archivos originales
 
-`archivos/` contiene los seis archivos tal como estaban, byte a byte. No se modifican,
+`archivos/` contiene los siete archivos tal como estaban, byte a byte. No se modifican,
 no se reescriben ni se les cambia el nombre: se cargan como son. `verificar.py`
 comprueba que el manifiesto y esa carpeta digan lo mismo.
 

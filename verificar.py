@@ -49,8 +49,8 @@ print("\n2. Referencias entre archivos")
 manifiesto = open(os.path.join(RAIZ, "app/js/manifiesto.js"), encoding="utf-8").read()
 entradas = re.findall(r"archivo:\s*'([^']+)'", manifiesto)
 print(f"   manifiesto declara {len(entradas)} herramientas")
-if len(entradas) != 6:
-    aviso(f"el manifiesto declara {len(entradas)} entradas (se esperaban 6)")
+if len(entradas) != 7:
+    aviso(f"el manifiesto declara {len(entradas)} entradas (se esperaban 7)")
 for nombre in entradas:
     existe = os.path.isfile(os.path.join(RAIZ, "archivos", nombre))
     (ok if existe else mal)(f"archivos/{nombre}")
