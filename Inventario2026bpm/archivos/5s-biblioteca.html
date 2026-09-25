@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>5S · Biblioteca Pública del Maule</title>
+<style>
+:root{
+  --bg:#f6f3ec; --card:#ffffff; --ink:#2b2620; --sub:#6b6154;
+  --line:#e4ddce; --accent:#8c3b2e; --accent2:#3c6e5c;
+  --ok:#3c6e5c; --pending:#c98a2c;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1c1916; --card:#26221d; --ink:#efe9df; --sub:#b3a998;
+    --line:#3a352c; --accent:#e07a5f; --accent2:#7fb8a0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1c1916; --card:#26221d; --ink:#efe9df; --sub:#b3a998;
+  --line:#3a352c; --accent:#e07a5f; --accent2:#7fb8a0;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+header{
+  padding:22px 18px 14px; text-align:center;
+  border-bottom:1px solid var(--line);
+}
+header h1{margin:0 0 4px; font-size:1.3rem; letter-spacing:.3px;}
+header p{margin:0; color:var(--sub); font-size:.88rem;}
+nav{
+  display:flex; gap:6px; overflow-x:auto; padding:10px 12px;
+  border-bottom:1px solid var(--line); position:sticky; top:env(safe-area-inset-top,0px);
+  background:var(--bg); z-index:5; -webkit-overflow-scrolling:touch;
+}
+nav button{
+  flex:0 0 auto; border:1px solid var(--line); background:var(--card); color:var(--ink);
+  padding:8px 13px; border-radius:20px; font-size:.82rem; font-weight:600; cursor:pointer;
+}
+nav button.active{background:var(--accent); border-color:var(--accent); color:#fff;}
+main{max-width:640px; margin:0 auto; padding:16px 14px 40px;}
+.panel{display:none;}
+.panel.active{display:block; animation:fade .25s ease;}
+@keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+.hero{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:16px; margin-bottom:14px;
+}
+.hero .tag{
+  display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.06em;
+  color:var(--accent); text-transform:uppercase; margin-bottom:6px;
+}
+.hero h2{margin:0 0 6px; font-size:1.15rem;}
+.hero p{margin:0; color:var(--sub); font-size:.9rem; line-height:1.5;}
+.progress-wrap{margin:12px 0 18px;}
+.progress-bar{
+  height:9px; background:var(--line); border-radius:6px; overflow:hidden;
+}
+.progress-bar > div{height:100%; background:var(--accent2); width:0%; transition:width .3s;}
+.progress-label{display:flex; justify-content:space-between; font-size:.78rem; color:var(--sub); margin-top:5px;}
+.item{
+  display:flex; gap:11px; align-items:flex-start; background:var(--card);
+  border:1px solid var(--line); border-radius:12px; padding:12px 13px; margin-bottom:9px;
+}
+.item input[type=checkbox]{
+  width:20px; height:20px; margin-top:1px; accent-color:var(--accent2); flex:0 0 auto;
+}
+.item label{font-size:.9rem; line-height:1.4; cursor:pointer;}
+.item .desc{display:block; color:var(--sub); font-size:.79rem; margin-top:2px;}
+.summary-row{
+  display:flex; align-items:center; gap:10px; background:var(--card);
+  border:1px solid var(--line); border-radius:12px; padding:12px 13px; margin-bottom:10px;
+}
+.summary-row .dot{width:11px; height:11px; border-radius:50%; flex:0 0 auto;}
+.summary-row .info{flex:1;}
+.summary-row .info b{font-size:.9rem;}
+.summary-row .pct{font-size:.85rem; font-weight:700; color:var(--accent2);}
+.reset-btn{
+  display:block; margin:22px auto 0; background:none; border:1px solid var(--line);
+  color:var(--sub); padding:9px 16px; border-radius:20px; font-size:.8rem; cursor:pointer;
+}
+footer{text-align:center; color:var(--sub); font-size:.75rem; padding:6px 14px 20px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Las 5S en la colección</h1>
+  <p>Biblioteca Pública del Maule — gestión visual del inventario</p>
+</header>
+
+<nav id="tabs"></nav>
+<main id="main"></main>
+
+<footer>Metodología 5S adaptada a organización bibliotecaria · datos guardados en este dispositivo</footer>
+
+<script>
+const S = [
+  {
+    id:"seiri", letra:"S1", nombre:"Seiri", es:"Clasificar",
+    color:"#8c3b2e",
+    intro:"Separar lo que la colección necesita de lo que ya no aporta: distinguir material vigente, obsoleto, duplicado o dañado antes de decidir qué se queda en sala.",
+    items:[
+      ["Detectar duplicados","Revisar títulos repetidos en el catálogo y decidir cuántos ejemplares conservar por sede."],
+      ["Identificar material obsoleto","Marcar enciclopedias, leyes o manuales desactualizados para dar de baja o derivar a depósito."],
+      ["Revisar estado físico","Apartar ejemplares dañados, incompletos o con hongos para restauración o descarte."],
+      ["Evaluar baja circulación","Listar títulos sin préstamos en 3+ años como candidatos a expurgo o traslado a bodega."],
+      ["Verificar donaciones pendientes","Clasificar cajas de donaciones acumuladas: incorporar, canjear o descartar."]
+    ]
+  },
+  {
+    id:"seiton", letra:"S2", nombre:"Seiton", es:"Ordenar",
+    color:"#b5652e",
+    intro:"Un lugar fijo y lógico para cada obra, con señalética clara, para que cualquier persona —usuario o funcionario— encuentre y devuelva el material sin esfuerzo.",
+    items:[
+      ["Verificar signatura topográfica","Confirmar que cada ejemplar esté en el estante correcto según CDU/tejuelo."],
+      ["Señalizar estanterías","Rotular secciones (infantil, referencia, novela, Maule/local) de forma visible."],
+      ["Ordenar por correlativo","Revisar que el orden numérico y alfabético dentro de cada estante sea correcto."],
+      ["Definir zona de recién devueltos","Establecer un carro o repisa exclusiva antes de reponer en estante."],
+      ["Mapear el depósito","Crear un plano simple de la bodega con ubicación de fondos históricos o especiales."]
+    ]
+  },
+  {
+    id:"seiso", letra:"S3", nombre:"Seiso", es:"Limpiar",
+    color:"#3c6e5c",
+    intro:"Limpieza como inspección: al asear estantes y ejemplares se detectan daños, plagas o desorden antes de que se conviertan en un problema mayor.",
+    items:[
+      ["Limpiar estantería semanal","Retirar polvo de repisas y separadores, revisando humedad o filtraciones."],
+      ["Inspeccionar plagas","Chequear signos de polilla del papel, hongos o roedores en depósito."],
+      ["Limpiar mobiliario de sala","Mesas, sillas y mesones de préstamo en condiciones higiénicas diarias."],
+      ["Revisar climatización","Verificar ventilación y humedad relativa adecuada para conservación."],
+      ["Sanitizar devoluciones","Protocolo simple de limpieza para libros devueltos antes de reponer."]
+    ]
+  },
+  {
+    id:"seiketsu", letra:"S4", nombre:"Seiketsu", es:"Estandarizar",
+    color:"#3f5f8a",
+    intro:"Convertir las buenas prácticas anteriores en procedimientos escritos y repetibles, iguales para todo el equipo y todas las sedes o salas.",
+    items:[
+      ["Manual de clasificación","Documentar criterios de expurgo y descarte para aplicarlos siempre igual."],
+      ["Checklist de reposición","Protocolo estándar para devolver un libro a su lugar correcto."],
+      ["Ficha de estado físico","Formato único para registrar daños y decidir restauración o baja."],
+      ["Calendario de limpieza","Frecuencia fija de aseo e inspección, con responsable asignado."],
+      ["Capacitar al equipo","Instruir a todo el personal, incluido voluntariado, en los mismos criterios."]
+    ]
+  },
+  {
+    id:"shitsuke", letra:"S5", nombre:"Shitsuke", es:"Disciplina",
+    color:"#7a4f8c",
+    intro:"Sostener el sistema en el tiempo: que el orden de las 5S sea un hábito institucional y no una campaña puntual de una sola vez.",
+    items:[
+      ["Auditoría mensual","Recorrido breve con checklist para verificar que el orden se mantiene."],
+      ["Reunión de seguimiento","Revisar avances y dificultades del equipo cada mes."],
+      ["Indicador de cumplimiento","Registrar % de estantes conformes a lo largo del año."],
+      ["Reconocer buenas prácticas","Destacar al personal o turno que mantiene mejor el orden."],
+      ["Actualizar el manual","Revisar anualmente los procedimientos según lo aprendido."]
+    ]
+  }
+];
+
+const KEY = "5s_maule_v1";
+function loadState(){
+  try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; }
+}
+function saveState(st){
+  try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){}
+}
+let state = loadState();
+
+function pctFor(s){
+  const total = s.items.length;
+  let done = 0;
+  s.items.forEach((_,i)=>{ if(state[s.id+"_"+i]) done++; });
+  return total? Math.round(done/total*100) : 0;
+}
+
+const tabs = document.getElementById("tabs");
+const main = document.getElementById("main");
+
+function renderTabs(active){
+  tabs.innerHTML = "";
+  S.concat([{id:"resumen", letra:"★", nombre:"Resumen"}]).forEach(s=>{
+    const b = document.createElement("button");
+    b.textContent = s.letra + " " + s.nombre;
+    if(s.id===active) b.classList.add("active");
+    b.onclick = ()=> render(s.id);
+    tabs.appendChild(b);
+  });
+}
+
+function renderPanelS(s){
+  const pct = pctFor(s);
+  let html = `
+  <div class="hero" style="border-left:4px solid ${s.color}">
+    <span class="tag" style="color:${s.color}">${s.letra} · ${s.nombre} (${s.es})</span>
+    <h2>${s.es}</h2>
+    <p>${s.intro}</p>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div style="width:${pct}%;background:${s.color}"></div></div>
+      <div class="progress-label"><span>Avance</span><span>${pct}%</span></div>
+    </div>
+  </div>`;
+  s.items.forEach((it,i)=>{
+    const key = s.id+"_"+i;
+    const checked = state[key] ? "checked" : "";
+    html += `
+    <div class="item">
+      <input type="checkbox" id="${key}" ${checked} onchange="toggle('${key}','${s.id}')">
+      <label for="${key}">${it[0]}<span class="desc">${it[1]}</span></label>
+    </div>`;
+  });
+  return html;
+}
+
+function renderResumen(){
+  let html = `<div class="hero">
+    <span class="tag">Vista general</span>
+    <h2>Estado del inventario</h2>
+    <p>Progreso de aplicación de cada S en la colección de la biblioteca.</p>
+  </div>`;
+  S.forEach(s=>{
+    const pct = pctFor(s);
+    html += `
+    <div class="summary-row">
+      <div class="dot" style="background:${s.color}"></div>
+      <div class="info"><b>${s.letra} · ${s.es}</b>
+        <div class="progress-bar" style="margin-top:6px"><div style="width:${pct}%;background:${s.color}"></div></div>
+      </div>
+      <div class="pct">${pct}%</div>
+    </div>`;
+  });
+  html += `<button class="reset-btn" onclick="resetAll()">Reiniciar todo el checklist</button>`;
+  return html;
+}
+
+let currentTab = "seiri";
+function render(id){
+  currentTab = id;
+  renderTabs(id);
+  if(id==="resumen"){
+    main.innerHTML = `<div class="panel active">${renderResumen()}</div>`;
+  } else {
+    const s = S.find(x=>x.id===id);
+    main.innerHTML = `<div class="panel active">${renderPanelS(s)}</div>`;
+  }
+}
+
+function toggle(key, sid){
+  state[key] = !state[key];
+  saveState(state);
+  render(currentTab === "resumen" ? "resumen" : sid);
+}
+
+function resetAll(){
+  state = {};
+  saveState(state);
+  render("resumen");
+}
+
+render("seiri");
+</script>
+</body>
+</html>
