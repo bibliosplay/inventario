@@ -95,6 +95,18 @@ export const HERRAMIENTAS = [
     resumen: 'Las 4 leyes del hábito aplicadas a la biblioteca: diseño, registro semanal y diagnóstico.',
     tamano: { ancho: 800, alto: 720 },
   },
+  {
+    id: 'recomendaciones',
+    archivo: 'recomendaciones-iniciales.html',
+    tipo: 'marco',
+    icono: '📌',
+    color: '#a9772f',
+    titulo: 'Recomendaciones iniciales',
+    etiqueta: 'Recomendaciones',
+    resumen: 'Propuesta de arranque del inventario total: reporte previo, cronograma de 8 acciones y cierre del proceso.',
+    tamano: { ancho: 760, alto: 760 },
+    destacado: true,
+  },
 ];
 
 /** Raíz del sitio. Este módulo vive en <raiz>/app/js/, de ahí el ../../. */
