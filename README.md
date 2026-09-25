@@ -1,6 +1,6 @@
 # Inventario 2026 BPM
 
-Escritorio web con los siete archivos del inventario de la Biblioteca PCM (Sede Madrid).
+Escritorio web con los siete archivos del inventario de la Biblioteca Pública #336, Talca.
 
 Se abre `index.html` y aparece un escritorio: un icono por archivo, y cada icono abre
 su contenido en una ventana que se puede mover, maximizar, minimizar y cerrar.
