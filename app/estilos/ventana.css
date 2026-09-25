@@ -1,0 +1,260 @@
+/* ==========================================================================
+   ventana.css — ventanas, barra de tareas y área de trabajo
+   ========================================================================== */
+
+/* El escritorio pasa a ser el "escritorio virtual" donde viven las ventanas.
+   Ocupa exactamente la fila central del grid, ya descontada la barra de tareas. */
+.zona { position: absolute; inset: var(--barra-h) 0 var(--fila-tareas, 54px); z-index: 10; }
+/* Con la zona vacía no hay nada que clicar encima, pero si capturara el ratón
+   taparía los iconos del escritorio, que quedan por debajo en el orden de capas. */
+.zona[data-vacia='1'] { pointer-events: none; }
+
+/* ------------------------------------------------------------- ventana ---- */
+.ventana {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  min-height: 220px;
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--r-l);
+  background: var(--superficie);
+  box-shadow: var(--sombra-3);
+  overflow: hidden;
+  contain: layout paint;
+  animation: ventana-entra 200ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+@keyframes ventana-entra {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.ventana.animando { animation: ventana-algebra none; transition: left 160ms, top 160ms, width 160ms, height 160ms; }
+.ventana[hidden] { display: none; }
+.ventana--sin-animacion { animation: none; }
+.ventana[data-max='1'] { border-radius: 0; border-color: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ventana { animation: none; }
+  .ventana.animando { transition: none; }
+}
+
+/* Barra de título */
+.ventana__barra {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  height: 42px;
+  padding: 0 8px 0 13px;
+  border-bottom: 1px solid var(--linea);
+  background: color-mix(in srgb, var(--tono, var(--acento)) 9%, var(--superficie-2));
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.ventana__barra:active { cursor: grabbing; }
+.ventana[data-max='1'] .ventana__barra { border-radius: 0; }
+
+.ventana__punto {
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--tono, var(--acento));
+  flex: 0 0 auto;
+}
+.ventana__icono { font-size: 15px; line-height: 1; flex: 0 0 auto; }
+.ventana__titulo {
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 650;
+  letter-spacing: -0.005em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ventana__archivo {
+  font-size: 11px;
+  font-family: var(--tipo-mono);
+  color: var(--tinta-3);
+  flex: 0 0 auto;
+  max-width: 30%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.controles { display: flex; gap: 2px; flex: 0 0 auto; }
+.control {
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--tinta-2);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transicion), color var(--transicion);
+}
+.control:hover { background: var(--superficie-3); color: var(--tinta); }
+.control--cerrar:hover { background: #d64545; color: #fff; }
+.control svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+
+/* Contenido */
+.ventana__cuerpo {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--superficie);
+}
+.ventana__cuerpo > iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--fondo);
+}
+.ventana__cargando {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  align-content: center;
+  background: var(--fondo);
+  color: var(--tinta-3);
+  font-size: 13px;
+  z-index: 2;
+}
+.ventana__cargando[hidden] { display: none; }
+.ruedita {
+  width: 26px; height: 26px;
+  border: 2.5px solid var(--linea);
+  border-top-color: var(--acento);
+  border-radius: 50%;
+  animation: gira 700ms linear infinite;
+}
+@keyframes gira { to { transform: rotate(360deg); } }
+
+/* Mangos de redimensionado */
+.mango { position: absolute; z-index: 3; touch-action: none; }
+.mango--n  { top: -3px; left: 10px; right: 10px; height: 7px; cursor: ns-resize; }
+.mango--s  { bottom: -3px; left: 10px; right: 10px; height: 7px; cursor: ns-resize; }
+.mango--e  { right: -3px; top: 10px; bottom: 10px; width: 7px; cursor: ew-resize; }
+.mango--o  { left: -3px; top: 10px; bottom: 10px; width: 7px; cursor: ew-resize; }
+.mango--ne { top: -3px; right: -3px; width: 14px; height: 14px; cursor: nesw-resize; }
+.mango--no { top: -3px; left: -3px; width: 14px; height: 14px; cursor: nwse-resize; }
+.mango--se { bottom: -3px; right: -3px; width: 14px; height: 14px; cursor: nwse-resize; }
+.mango--so { bottom: -3px; left: -3px; width: 14px; height: 14px; cursor: nesw-resize; }
+.ventana[data-max='1'] .mango { display: none; }
+
+/* -------------------------------------------------------- barra tareas ---- */
+/* Ocupa la tercera fila del grid del escritorio: así el área de ventanas
+   se dimensiona sola, sin medir nada desde JavaScript. */
+.tareas {
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 0;
+  padding: 0 10px;
+  border-top: 1px solid var(--linea);
+  background: color-mix(in srgb, var(--superficie) 86%, transparent);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  z-index: 50;
+  overflow: hidden;
+}
+.tareas[data-visible='0'] { border-top-color: transparent; }
+.tareas__lista {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 5px 0;
+  scrollbar-width: none;
+}
+.tareas__lista::-webkit-scrollbar { display: none; }
+
+.tarea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  max-width: 220px;
+  padding: 7px 12px;
+  border: 1px solid var(--linea);
+  border-radius: 9px;
+  background: var(--superficie);
+  color: var(--tinta-2);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transicion), color var(--transicion), border-color var(--transicion);
+}
+.tarea:hover { background: var(--superficie-2); color: var(--tinta); }
+.tarea[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--tono, var(--acento)) 14%, var(--superficie));
+  border-color: color-mix(in srgb, var(--tono, var(--acento)) 45%, var(--linea));
+  color: var(--tinta);
+}
+.tarea__ico { font-size: 14px; }
+.tarea__txt { overflow: hidden; text-overflow: ellipsis; }
+.tarea__punto {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--tono, var(--acento));
+  flex: 0 0 auto;
+}
+.tareas__vacio { padding: 0 12px; font-size: 12.5px; color: var(--tinta-3); }
+
+.boton-tareas {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 34px;
+  flex: 0 0 auto;
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--tinta-2);
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--transicion), color var(--transicion);
+}
+.boton-tareas:hover { background: var(--superficie-2); color: var(--tinta); }
+.boton-tareas[data-activo='1'] { background: var(--acento-velo); border-color: var(--acento); color: var(--acento); }
+
+.tareas__marca {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-left: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--tinta-3);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  flex: 0 0 auto;
+}
+
+/* ----------------------------------------------------- modo teléfono ------ */
+@media (max-width: 760px) {
+  .ventana {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0;
+    border: 0;
+  }
+  .ventana__barra { height: 48px; padding-left: 16px; }
+  .ventana__archivo { display: none; }
+  .tareas { height: 58px; }
+  .tarea { max-width: 150px; }
+  .tareas__marca { display: none; }
+  .escritorio { --fila-tareas: 58px; }
+}
