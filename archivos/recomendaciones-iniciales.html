@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Recomendaciones iniciales · Inventario 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8ecef; --paper:#fff; --ink:#1c2733; --mute:#5d6b78; --line:#d5dce2;
+  --acc:#0e6b6b; --accink:#fff; --soft:#eaf3f3; --panel:#f7f9fa;
+  --warn:#a9772f; --warnsoft:#f7edd9;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#12181d; --paper:#1a2229; --ink:#e6ecf0; --mute:#93a2ae; --line:#2c3842;
+    --acc:#4fc0bd; --accink:#06211f; --soft:#12292a; --panel:#161d23;
+    --warn:#e0af5f; --warnsoft:#2a2416;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12181d; --paper:#1a2229; --ink:#e6ecf0; --mute:#93a2ae; --line:#2c3842;
+  --acc:#4fc0bd; --accink:#06211f; --soft:#12292a; --panel:#161d23;
+  --warn:#e0af5f; --warnsoft:#2a2416;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+
+.doc{max-width:760px;margin:0 auto;padding:28px 20px 56px}
+.paper{background:var(--paper);border:1px solid var(--line);border-top:5px solid var(--acc);border-radius:2px;padding:40px 44px;font-family:Literata,Georgia,serif;line-height:1.7}
+@media (max-width:640px){.paper{padding:28px 22px}}
+
+.meta{font:500 12.5px "IBM Plex Sans",sans-serif;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1.t{font-size:30px;line-height:1.2;margin:0 0 6px;font-weight:700}
+.sub{color:var(--mute);font:italic 400 16px/1.5 Literata,serif;margin:0 0 28px}
+
+.bloque{margin:0 0 30px}
+.bloque > .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--acc);color:var(--accink);font:600 13px "IBM Plex Sans",sans-serif;margin-right:8px;flex:none}
+.bloque h2{font-size:19px;margin:0 0 10px;font-weight:600;display:flex;align-items:center;gap:2px}
+.bloque p{margin:6px 0 6px 34px}
+
+.fecha{display:inline-block;background:var(--soft);color:var(--acc);border-radius:5px;padding:0 6px;font-weight:600;font-family:Literata,serif;white-space:nowrap}
+
+.acciones{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.acciones li{position:relative;padding:14px 16px 14px 62px;background:var(--panel);border:1px solid var(--line);border-radius:6px}
+.acciones .ord{position:absolute;left:16px;top:14px;font:600 11px "IBM Plex Sans",sans-serif;color:var(--acc);letter-spacing:.04em;background:var(--soft);border-radius:4px;padding:2px 6px}
+.acciones p{margin:0;padding:0}
+.acciones .ord + p{margin-top:2px}
+
+.nota{display:flex;gap:10px;align-items:flex-start;background:var(--warnsoft);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:30px 0 0;font:400 14px/1.55 "IBM Plex Sans",sans-serif;color:var(--ink)}
+.nota .ic{flex:none;font-size:16px;line-height:1.3}
+.nota b{color:var(--warn)}
+
+.pie{margin-top:36px;padding-top:16px;border-top:1px dashed var(--line);font:400 13px "IBM Plex Sans",sans-serif;color:var(--mute)}
+
+.top{display:flex;justify-content:flex-end;max-width:760px;margin:0 auto;padding:14px 20px 0}
+.tema{font:500 12.5px "IBM Plex Sans",sans-serif;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:99px;padding:5px 12px;cursor:pointer}
+.tema:hover{border-color:var(--acc)}
+
+@media print{
+  .top{display:none}
+  body{background:#fff}
+  .paper{border:none;padding:0}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <button class="tema" id="btnTema" type="button">🌓 Tema</button>
+</div>
+
+<main class="doc">
+  <article class="paper">
+    <p class="meta">
+      <span>Inventario 2026 · Biblioteca Pública #336, Talca</span>
+      <span>Documento de trabajo</span>
+    </p>
+    <h1 class="t">Recomendaciones iniciales a ser evaluadas</h1>
+    <p class="sub">Propuesta de arranque para el inventario total de la colección, sujeta a revisión y ajuste por el equipo.</p>
+
+    <div class="bloque">
+      <h2><span class="num">1</span> Reporte previo a mesa de ayuda</h2>
+      <p>Solicitar a la mesa de ayuda un reporte con el listado de la colección completa de la Biblioteca #336, Talca.
+      Se depura el archivo y se extraen solo los códigos de barra de cada ítem. El archivo resultante se envía a la
+      coordinadora regional como resultado del Inventario 2026.</p>
+    </div>
+
+    <div class="bloque">
+      <h2><span class="num">2</span> Inicio del proceso</h2>
+      <p>Se inicia el <span class="fecha">lunes 28 de septiembre de 2026</span> con las siguientes acciones:</p>
+
+      <ol class="acciones">
+        <li><span class="ord">PRIMERA</span>
+          <p>Reunión presencial para establecer, mediante actas, los acuerdos y directrices del <strong>inventario
+          total de la colección</strong>, cuya finalización es el <span class="fecha">martes 1 de diciembre de 2026</span>,
+          con la entrega del acta de inventario a la coordinadora regional de bibliotecas públicas.</p>
+        </li>
+        <li><span class="ord">SEGUNDA</span>
+          <p>Nivelación de competencias en Word y Excel, para tener independencia y no depender de terceros al
+          trabajar con los datos. Se sugieren capacitaciones diarias de no más de 30 minutos efectivos en el
+          laboratorio del SERPAT, sujetas a disponibilidad de horarios de Manuel Gavilán.</p>
+        </li>
+        <li><span class="ord">TERCERA</span>
+          <p>Inventario volumétrico de estanterías, bandejas de estanterías, estantes, bandejas de estantes, mesas,
+          escritorios, carros y cajas que contengan material bibliotecario a inventariar, incluyendo salas,
+          secciones, oficinas y bodegas donde se encuentre el bien a contar. Existe un documento aclaratorio para
+          este punto.</p>
+        </li>
+        <li><span class="ord">CUARTA</span>
+          <p>Señalética para las cajas en bodegas y comienzo del inventario en los puestos de trabajo de este
+          material bibliográfico. Las cajas se trasladan en la yegua. El material se discrimina según el criterio
+          descrito en un documento más específico.</p>
+        </li>
+        <li><span class="ord">QUINTA</span>
+          <p>Señalética para las estanterías en bodegas y comienzo del inventario en bodega del material
+          bibliográfico. El material se discrimina según el criterio descrito en un documento más específico.</p>
+        </li>
+        <li><span class="ord">SEXTA</span>
+          <p>Señalética para las estanterías y cajas de material sin proceso. Traslado de las cajas al puesto de
+          trabajo, procesamiento del material y preparación para disponerlo en las estanterías. El material se
+          discrimina según el criterio descrito en un documento más específico.</p>
+        </li>
+        <li><span class="ord">SÉPTIMA</span>
+          <p>Ordenar estanterías y limpiar el material bibliotecario de acuerdo al orden preestablecido en un
+          documento específico que se generará posteriormente.</p>
+        </li>
+        <li><span class="ord">OCTAVA</span>
+          <p>Comunicar a los usuarios que se está en proceso de inventario y que hay criterios preestablecidos que
+          cumplir hasta el <span class="fecha">viernes 27 de noviembre</span>. Se procede a inventariar la colección
+          según los criterios que se establecen en otro documento.</p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="bloque">
+      <h2><span class="num">3</span> Cierre del proceso</h2>
+      <p>Se generan los controles, se depura la base de datos obtenida y se genera el acta de entrega, dando por
+      finalizado el proceso correspondiente al Inventario 2026.</p>
+    </div>
+
+    <div class="nota">
+      <span class="ic">📌</span>
+      <span><b>Pendiente:</b> los documentos específicos para cada punto serán publicados durante la semana
+      próxima, luego de afinar criterios.</span>
+    </div>
+
+    <p class="pie">Recomendaciones iniciales a ser evaluadas — documento de trabajo, sujeto a modificación por el equipo antes de su aprobación definitiva.</p>
+  </article>
+</main>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('btnTema');
+  var KEY = 'inv2026-tema';
+  function aplicar(t){
+    if(t === 'claro') root.setAttribute('data-theme','light');
+    else if(t === 'oscuro') root.setAttribute('data-theme','dark');
+    else root.removeAttribute('data-theme');
+  }
+  var guardado = null;
+  try { guardado = localStorage.getItem(KEY); } catch(e){}
+  aplicar(guardado);
+  btn.addEventListener('click', function(){
+    var actual = root.getAttribute('data-theme');
+    var siguiente = actual === 'dark' ? 'claro' : (actual === 'light' ? 'auto' : 'oscuro');
+    aplicar(siguiente);
+    try { localStorage.setItem(KEY, siguiente); } catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
